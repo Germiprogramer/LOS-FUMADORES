@@ -16,21 +16,19 @@ class Agente(threading.Thread):
                 q.put(self.ingredientes)
                 s.acquire()
                 print('El agente pone el papel y el tabaco')
-                time.sleep(1)
+                time.sleep(2)
         elif self.ingrediente == 1:
                 self.ingredientes = ["papel", "cerillas"]
                 print('El agente pone el papel y las cerillas')
                 q.put(self.ingredientes)
                 s.acquire()
-                time.sleep(1)
+                time.sleep(2)
         elif self.ingrediente == 2:
                 self.ingredientes = ["tabaco", "cerillas"]
                 q.put(self.ingredientes)
                 s.acquire()
                 print('El agente pone el tabaco y las cerillas')
-                time.sleep(1)
-        else:
-                pass
+                time.sleep(2)
 
     def run(self):
         while True:
@@ -40,7 +38,7 @@ class Agente(threading.Thread):
                  print("El agente recoge los ingredientes")
                  q.get()
                  s.release()
-                 time.sleep(1)
+                 time.sleep(2)
                  
 
             
@@ -58,14 +56,15 @@ class Fumador(threading.Thread):
                 q.get()
                 s.release()
                 print(self.nombre + ' fuma')
+                time.sleep(2)
                 q.put(self.agente.ingredientes)
                 s.acquire()
-                time.sleep(2)
+                
             else:
                 pass
 
 q = Queue(1)
-s = threading.Semaphore(1)
+s = threading.Semaphore(0)
 
 if __name__ == "__main__":
 
